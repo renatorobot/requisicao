@@ -62,19 +62,70 @@ class _HomeState extends State<Home> {
     
   }
 
-  _put(){
+  _put() async{
+    
+    var envio = json.encode(
 
+      {
+        "userId": 120,
+        "id": null,
+        "title": "titulo alterado",
+        "body": "Corpo alterado"
+      },
+
+    );
+    
+    http.Response response = await http.put(
+      _urlBase + '/posts/1',
+
+      headers: <String, String>{
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+        
+      body: envio,
+    );
+
+    print("resposta: ${response.statusCode}");
+    print("resposta: ${response.body}");
+    
     
   }
 
-  _patch(){
+  _patch() async{
 
+    var envio = json.encode(
+
+      {
+        "userId": 120,
+        "body": "Corpo alterado"
+      },
+
+    );
     
+    http.Response response = await http.patch(
+      _urlBase + '/posts/1',
+
+      headers: <String, String>{
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+        
+      body: envio,
+    );
+
+    print("resposta: ${response.statusCode}");
+    print("resposta: ${response.body}");
+    
+
   }
 
-  _delete(){
+  _delete() async{
 
-    
+    http.Response response = await http.delete(
+      _urlBase + '/posts/1');
+
+     print("resposta: ${response.statusCode}");
+    print("resposta: ${response.body}");
+
   }
 
   @override
@@ -96,11 +147,11 @@ class _HomeState extends State<Home> {
                 ),
                 RaisedButton(
                   child: Text("Atualizar"),
-                  onPressed: (){},
+                  onPressed: _patch,
                 ),
                 RaisedButton(
                   child: Text("Remover"),
-                  onPressed: (){},
+                  onPressed: _delete,
                 )
               ],
             ),
